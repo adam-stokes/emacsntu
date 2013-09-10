@@ -11,16 +11,17 @@ use File::Slurp;
 use File::HomeDir;
 
 sub initialize {
-	my ($conf) = @_;
-	my $home = File::HomeDir->my_home;
-	my $init_el = catfile($home, ".emacs.d/init.el");
-	foreach (@{$conf->{script}}) {
-		print "running: $_\n";
-		`$_`;
-	}
-  make_path(catdir($home, '.emacs.d')) unless -d catdir($home, '.emacs.d');
-  local $CWD = catdir($home, '.emacs.d');
-	write_file($init_el, {binmode => ':raw'}, $conf->{init_el});
+    my ($conf) = @_;
+    my $home = File::HomeDir->my_home;
+    my $init_el = catfile($home, ".emacs.d/init.el");
+    foreach (@{$conf->{script}}) {
+        print "running: $_\n";
+        `$_`;
+    }
+    make_path(catdir($home, '.emacs.d'))
+      unless -d catdir($home, '.emacs.d');
+    local $CWD = catdir($home, '.emacs.d');
+    write_file($init_el, {binmode => ':raw'}, $conf->{init_el});
 }
 
 ###############################################################################
